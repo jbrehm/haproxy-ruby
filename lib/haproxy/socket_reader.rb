@@ -4,6 +4,7 @@ require 'haproxy/csv_parser'
 
 module HAProxy
   class SocketReader < HAProxy::StatsReader
+     include HAProxy::Acl
 
     def initialize(path)
       raise ArgumentError, "Socket #{path} doesn't exists or is not a UNIX socket" unless File.exists?(path) and File.socket?(path)
@@ -91,9 +92,12 @@ module HAProxy
 
     protected
 
+    #TODO raise on garbage like the 'help' dialog from haproxy
+    #TODO accept line limits, raise too many
+    #
     def send_cmd(cmd, &block)
       socket = UNIXSocket.new(@path)
-      socket.write(cmd + ';')
+      socket.write(cmd + "\n")
       socket.each do |line|
         next if line.chomp.empty?
         yield(line.strip)
