@@ -1,6 +1,7 @@
 require 'socket'
 require 'haproxy/stats_reader'
 require 'haproxy/csv_parser'
+require 'haproxy/acl'
 
 module HAProxy
   class SocketReader < HAProxy::StatsReader
