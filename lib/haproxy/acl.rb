@@ -27,7 +27,7 @@ module HAProxy
         lines +=1
       end
       rule = get_acl_value(acl, value)
-      raise("Update failed") if (rv != 'Done.') || (rule["match"] != 'yes')
+      raise("Update failed") if (rule["match"] != 'yes')
       rule
     end
 
